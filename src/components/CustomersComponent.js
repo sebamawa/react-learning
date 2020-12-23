@@ -8,9 +8,9 @@ export default function CustomersComponent(props) {
                 <li key={i}>{customer.name}</li>
             ))}
         </ul>
-        <button className="square" onClick={() => addCustomer()}>
+        {/* <button className="square" onClick={() => addCustomer()}>
             Add customer
-        </button>
+        </button> */}
     </>
     );
 }
