@@ -11,13 +11,7 @@ const customers = [
   {id: 4, name: "Mariela"}
 ] 
 
-// componente Customer
-// function Customer(customer){
-//   return React.createElement("div", null, 
-//       React.createElement("p", null, customer.id),
-//       React.createElement("p", null, customer.name));
-// }
-
+// componente funcional que recive un array como props
 function CustomersList(props) {
   return React.createElement(
     "ul",
@@ -27,14 +21,13 @@ function CustomersList(props) {
   );
 }
 
-// const customersToRender = customers.map((customer, i) => Customer(customer));
-
-const titulo = React.createElement("h1", null, "Hola munado con React !!!");
+// elemento React con createElement()
+// const titulo = React.createElement("h1", null, "Hola munado con React !!!");
 ReactDOM.render(
-  React.createElement(CustomersList, {customers}, null),
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>,
+  // React.createElement(CustomersList, {customers}, null),
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
