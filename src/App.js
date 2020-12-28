@@ -7,6 +7,7 @@ import customers_json from './mock-data/customers.json';
 
 import colors_json from "./mock-data/list-color-data.json";
 import ColorListComponent from "./components/ColorListComponent";
+import AddColorFormComponent from "./components/AddColorFormComponent";
 import { useState } from 'react';
 
 // import React from 'react';
@@ -41,7 +42,6 @@ function App() {
             setCustomersList(newCustomerList);
           }  
         }} 
-      
       />
 
       {/* <StarRatingComponent 
@@ -52,11 +52,22 @@ function App() {
 
       <ColorListComponent 
         colors_list={colors_list}
+        onRateColor={(id, rating) => {
+          console.log("OnRateColor ejecutado ...");
+          const newColorsList = colors_list.map(color =>
+            color.id === id ? {...color, rating} : color
+            );
+            setColorlist(newColorsList);
+        }}
         onRemoveColor={id  => {
           const newColorsList = colors_list.filter(color => color.id !== id);
           setColorlist(newColorsList);
         }}
-      /> {/** paso estado como prop */}
+      /> 
+
+      <AddColorFormComponent
+        onNewColor = {(title, color) => alert(`Color ${color} agregado.`)}
+      />
     </>
   );
 }
