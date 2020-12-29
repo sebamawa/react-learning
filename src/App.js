@@ -1,14 +1,16 @@
 // import logo from './logo.svg';
 // import homero from './assets/homero.jpg';
 import './App.css';
-import CustomersListComponent from  './components/CustomersComponent';
+import CustomersListComponent from  './components/customers/CustomersListComponent';
 import customers_json from './mock-data/customers.json';
+import AddCustomerFormComponent from "./components/customers/AddCustomerFormComponent";
 // import StarRatingComponent from './components/StarRatingComponent';
 
 import colors_json from "./mock-data/list-color-data.json";
 import ColorListComponent from "./components/ColorListComponent";
 import AddColorFormComponent from "./components/AddColorFormComponent";
 import { useState } from 'react';
+import {v4} from "uuid"; // genera id unico
 
 // import React from 'react';
 // import ReactDOM from 'react-dom';
@@ -36,12 +38,24 @@ function App() {
             setCustomersList(newCustomersList);
           }
         }}
-        onAddCustomer={customer => {
+        onCreateCustomer={customer => {
           if (customer !== null) {
             const newCustomerList = [...customersList, customer];
             setCustomersList(newCustomerList);
           }  
         }} 
+      />
+      <AddCustomerFormComponent
+        onAddCustomer={name => {
+          const newCustomersList = [
+            ...customersList,
+            {
+              id: customersList.length,
+              name
+            }
+          ];
+          setCustomersList(newCustomersList);
+        }}
       />
 
       {/* <StarRatingComponent 
@@ -53,7 +67,6 @@ function App() {
       <ColorListComponent 
         colors_list={colors_list}
         onRateColor={(id, rating) => {
-          console.log("OnRateColor ejecutado ...");
           const newColorsList = colors_list.map(color =>
             color.id === id ? {...color, rating} : color
             );
@@ -66,7 +79,18 @@ function App() {
       /> 
 
       <AddColorFormComponent
-        onNewColor = {(title, color) => alert(`Color ${color} agregado.`)}
+        onNewColor = {(title, color) => {
+          const newColors = [
+            ...colors_list,
+            {
+              id: v4(),
+              rating: 0,
+              title,
+              color
+            }
+          ];
+          setColorlist(newColors);
+        }}
       />
     </>
   );

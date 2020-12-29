@@ -16,7 +16,7 @@ function CustomerComponent({customer, isSelectedCustomer, onRemove = f => f}) {
 
 export default function CustomersListComponent({customersList = [], 
     onRemoveCustomer = f => f,
-    onAddCustomer = f => f}) {
+    onCreateCustomer = f => f}) {
     const [selectedListItem, setSelectedListItem] = useState(null);  // estado para seleccionar clase css para el customer clickeado 
     const customerFromUser = () => {
         const name = prompt("Ingrese el nombre del customer:");
@@ -54,8 +54,8 @@ export default function CustomersListComponent({customersList = [],
                 }
             </ul> 
             <button
-                onClick={() => onAddCustomer(customerFromUser())}
-            >Add Customer</button>     
+                onClick={() => onCreateCustomer(customerFromUser())}
+            >Add Customer (prompt)</button>     
         </div>
     );
        

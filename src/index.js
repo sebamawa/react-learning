@@ -4,22 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const customers = [
-  {id: 1, name: "Alejandro"},
-  {id: 2, name: "Vivian"},
-  {id: 3, name: "Pablo"},
-  {id: 4, name: "Mariela"}
-] 
+// const customers = [
+//   {id: 1, name: "Alejandro"},
+//   {id: 2, name: "Vivian"},
+//   {id: 3, name: "Pablo"},
+//   {id: 4, name: "Mariela"}
+// ] 
 
 // componente funcional que recive un array como props
-function CustomersList(props) {
-  return React.createElement(
-    "ul",
-    { className: "customers" },
-    props.customers.map((customer, index) => React.createElement("li", {key:index}, customer.name)
-    )
-  );
-}
+// function CustomersList(props) {
+//   return React.createElement(
+//     "ul",
+//     { className: "customers" },
+//     props.customers.map((customer, index) => React.createElement("li", {key:index}, customer.name)
+//     )
+//   );
+// }
 
 // elemento React con createElement()
 // const titulo = React.createElement("h1", null, "Hola munado con React !!!");

@@ -19,8 +19,8 @@ export default function AddColorFormComponent({onNewColor = f => f}){
 
     const submit = e => {
         e.preventDefault();
-        console.log(title);
-        setTitle("")
+        onNewColor(title, color);
+        setTitle(""); // codigo imperativo
         setColor("#000000");
     }
 
