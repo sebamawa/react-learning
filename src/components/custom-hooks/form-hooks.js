@@ -7,6 +7,7 @@ import {useState} from "react";
  * 
  * Donde title es una variable de estado que corresponde al valor de un <input/> 
  * y setTitle() modifica el estado para esa variable (mediante el hook useState()) 
+ * Con esto se logra que el form se un componente controlado (si no se referencia el DOM por otro lado)
  */
 
  export const useInput = initialValue => {
