@@ -1,17 +1,30 @@
 import {React, useState} from "react";
-import './CustomersComponent.css';
+import './CustomersListComponent.css';
 import { useCustomers } from "./CustomersProviderHook";
 
 function CustomerComponent({customer, isSelectedCustomer, onRemove = f => f}) {
+    const {deleteCustomer} = useCustomers();
     return(
-        <div>
-            {customer.id} - {customer.name} - {customer.phone}
-            {/* <button hidden={selectedCustomer===customer ? '' : "hidden"}  */}
-            <button 
-                    hidden={isSelectedCustomer ? '' : 'hidden'}
-                    onClick={() => onRemove(customer.id)}> X
-            </button>       
-        </div>
+        <>
+            <td>
+                {customer.id}
+            </td> 
+            <td>
+                {customer.name}
+            </td>
+            <td> 
+                {customer.phone}
+            </td>
+            <td>
+                {/* <button hidden={selectedCustomer===customer ? '' : "hidden"}  */}
+                <button type="button" className="btn btn-danger"
+                        hidden={isSelectedCustomer ? '' : 'hidden'}
+                        // onClick={() => onRemove(customer.id)}> X
+                        onClick={() => deleteCustomer(customer.id)}
+                > X        
+                </button>  
+                </td>     
+        </>
     );
 }
 
@@ -36,16 +49,27 @@ export default function CustomersListComponent({customersList = [],
 
     // obtengo customers del CustomersProviderHook
     const {customers} = useCustomers();
-    console.log(customers);
-    return(   
-        <div style={{padding: "5px", background: "#B8F08E"}}>
+    return(  
+        <> 
+        <p hidden={customers.length===0 ? "" : "hidden"}>No customers Listed. (Add a Customer)</p> 
+        <table className="table">
+            <thead>
+            <tr style={{background: "bisque"}}>
+                <th>id</th>
+                <th>name</th>
+                <th>phone</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+    
+         {/* <div style={{padding: "5px", background: "#B8F08E"}}> */}
             {/* <p hidden={customersList.length===0 ? "" : "hidden"}>No customers Listed. (Add a Customer)</p>  */}
-            <p hidden={customers.length===0 ? "" : "hidden"}>No customers Listed. (Add a Customer)</p> 
-            <ul className="customers">
+            {/* <tr className="customers"> */}
                 {
                     // customersList.map(customer => (
                         customers.map(customer => (
-                        <li key={customer.id}
+                        <tr key={customer.id}
                             className={selectedListItem===customer ? 'selected' : ''} 
                             onClick={() => setSelectedListItem(customer)}
                         >
@@ -57,14 +81,17 @@ export default function CustomersListComponent({customersList = [],
                                 isSelectedCustomer={customer===selectedListItem}                          
                             >  
                             </CustomerComponent>
-                        </li>  
+                        </tr>  
                     ))
                 }
-            </ul> 
-            <button
-                // onClick={() => onCreateCustomer(customerFromUser())}
-            >Add Customer (prompt)</button>     
-        </div>
+            {/* </tr>  */}
+            {/* <button
+                onClick={() => onCreateCustomer(customerFromUser())}
+            >Add Customer (prompt)</button>      */}
+        {/* </div> */}
+        </tbody>
+        </table>
+        </>
     );
        
 }

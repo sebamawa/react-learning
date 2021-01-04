@@ -13,10 +13,9 @@ export default function CustomersProvider({ children }) {
 
     const [customers, setCustomers] = useState();
 
+    
+    // para hacer el http request get de customers
     useEffect(() => {
-        console.log("use effect");
-        // if (!customers) return;
-
         fetch(urlBaseCustomers)
             .then(response => response.json())
             .then(setCustomers)
@@ -24,45 +23,56 @@ export default function CustomersProvider({ children }) {
         
     }, [children]);
 
-    // // http get
-    // const getCustomers = async () => {
-    //     console.log("Llamada de getcustomers()");
-    //     try {
-    //         const response = await fetch(urlBaseCustomers);
-    //         customersData = await response.json();
-    //         console.log(customersData);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
+    // http post
+    const addCustomer = async customer => {
+        try {
+            const response = await fetch(urlBaseCustomers, 
+                {
+                    method: "POST",
+                    body: JSON.stringify(customer),
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }
+            );
+            const customerData = await response.json();
+            // console.log(customerData);
+            setCustomers([...customers, customerData]); // agrego el customer nuevo sin hacer un GET
+        } catch(error) {
+            console.log(error);
+        }
+    }
 
-    //const customersData = getCustomers();
-    //console.log(cur);
+    const deleteCustomer = async id => {
+        const url = `${urlBaseCustomers}/${id}`;
+        console.log(url);
+        try {
+            const response = await fetch(url, 
+                {
+                    method: "DELETE",
+                    // body: JSON.stringify(),
+                     headers: {
+                         'Content-Type': 'application/json'
+                         // 'Content-Type': 'application/x-www-form-urlencoded',
+                     }
+                }
+            );
+            // const customerData = await response.json();
+            // console.log(customerData);
+            const customersMinusOne = customers.filter(customer => customer.id != id);
+            setCustomers(customersMinusOne); // agrego el customer nuevo sin hacer un GET
+        } catch(error) {
+            console.log(error);
+        }        
 
-    //const [customers, setCustomers] = useState(getCustomers());
+    }
 
-    // const addColor = (title, color) => 
-    //     setColors([
-    //         ...colors,
-    //         {
-    //             id: v4(),
-    //             rating: 0,
-    //             title,
-    //             color,
-    //         }
-    //     ]);
-   
-    //     const rateColor = (id, rating) =>
-    //         setColors(
-    //             colors.map(color => color.id === id ? {...color, rating} : color)
-    //         );
-
-    //     const removeColor = id => setColors(colors.filter(color => color.id !== id));
-
-    if (!customers) return null;
+    // if (!customers) return null;
+    if (!customers) return <h1>Loading</h1>;
     return (
         // proveedor de contexto (se agregan los colores del estado al contexto)
-        <CustomersContext.Provider value={{customers}}>
+        <CustomersContext.Provider value={{customers, addCustomer, deleteCustomer}}>
             {children}
         </CustomersContext.Provider>
     );
